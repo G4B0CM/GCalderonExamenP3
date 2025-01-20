@@ -17,9 +17,8 @@ namespace GCalderonExamenP3.ViewModels
         private readonly PaisRepository _paisRepository;
 
         public ICommand SaveCommand { get; }
-        public ICommand GetAllPeopleCommand { get; }
-        public ICommand DeletePersonCommand { get; }
-        public ICommand BuscarApiCommand { get; }
+        public ICommand ObtenerTodosLosPaises { get; }
+        public ICommand EliminarPaisCommand { get; }
         public Models.Pais Pais
         {
             get => _pais;
@@ -81,9 +80,8 @@ namespace GCalderonExamenP3.ViewModels
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
-            GetAllPeopleCommand = new AsyncRelayCommand(LoadPeople);
-            DeletePersonCommand = new AsyncRelayCommand<Models.Pais>((person) => Eliminar(person));
-            BuscarApiCommand = new AsyncRelayCommand(LLamarAPI("Arg"));
+            ObtenerTodosLosPaises = new AsyncRelayCommand(LoadPeople);
+            EliminarPaisCommand = new AsyncRelayCommand<Models.Pais>((person) => Eliminar(person));
         }
         public string StatusMessage
         {
@@ -95,17 +93,6 @@ namespace GCalderonExamenP3.ViewModels
             }
         }
 
-        public async Task LoadUsersAsync()
-        {
-
-            var users = await _userService.GetUsersAsync();
-            Paises.Clear();
-            foreach (var user in users)
-            {
-                Paises.Add(user);
-                Console.WriteLine(user.ToString);
-            }
-        }
         private async Task Save()
         {
             try
@@ -114,15 +101,19 @@ namespace GCalderonExamenP3.ViewModels
                 {
                     throw new Exception("El nombre no puede estar vacío.");
                 }
-                if (string.IsNullOrEmpty(_pais.Region))
+                var httpClient = new HttpClient();
+                var response = await httpClient.GetStringAsync("https://restcountries.com/v3.1/name/" + _pais.Nombre + "?fields=name,region,maps");
+
+                
+                var paises = JsonSerializer.Deserialize<List<Models.Pais>>(response);
+
+                
+                foreach (var pais in paises)
                 {
-                    throw new Exception("El nombre no puede estar vacío.");
+                    _paisRepository.agregarPais(pais.Nombre, pais.Region, pais.LinkGoogle);
                 }
-                if (string.IsNullOrEmpty(_pais.LinkGoogle))
-                {
-                    throw new Exception("El nombre no puede estar vacío.");
-                }
-                _paisRepository.agregarUsuario(_pais.Nombre, _pais.Region, _pais.LinkGoogle);
+
+                Console.WriteLine( "Datos importados desde la API correctamente.");
 
                 StatusMessage = $"Persona {_pais.Nombre} guardada exitosamente.";
                 await Shell.Current.GoToAsync($"..?saved={_pais.Nombre}");
@@ -186,27 +177,11 @@ namespace GCalderonExamenP3.ViewModels
                     Paises.Remove(paisEncontrado);
             }
         }
-        private async Task LLamarAPI(string nombrePais)
+        private async Task LLamarAPI()
         {
             try
             {
-                if (nombrePais == null)
-                {
-                    throw new Exception("Persona no válida.");
-                }
-                var httpClient = new HttpClient();
-                var response = await httpClient.GetStringAsync("\r\nhttps://restcountries.com/v3.1/name/"+nombrePais+"?fields=name,region,maps");
-
-                // Parsear la respuesta
-                var paises = JsonSerializer.Deserialize<List<Models.Pais>>(response);
-
-                // Guardar los datos en la base de datos local
-                foreach (var pais in paises)
-                {
-                    _paisRepository.agregarUsuario(pais.Nombre, pais.Region, pais.LinkGoogle);
-                }
-
-                StatusMessage = "Datos importados desde la API correctamente.";
+                
             }
             catch (Exception ex)
             {

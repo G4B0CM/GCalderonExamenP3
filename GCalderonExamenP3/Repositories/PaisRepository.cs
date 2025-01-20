@@ -31,7 +31,7 @@ namespace GCalderonExamenP3.Repositories
                 _dbPath = dbPath;
             }
 
-            public void agregarUsuario(string nombre, string region,string linkGoogle)
+            public void agregarPais(string nombre, string region,string linkGoogle)
             {
                 int result = 0;
                 try
