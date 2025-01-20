@@ -12,7 +12,7 @@ namespace GCalderonExamenP3.ViewModels
     {
         private string _statusMessage;
         public ObservableCollection<Pais> Paises { get; set; }
-
+        private PaisAPI paisAPI;
         private Models.Pais _pais;
         private readonly PaisRepository _paisRepository;
 
@@ -76,7 +76,7 @@ namespace GCalderonExamenP3.ViewModels
         {
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GabrielCalderon.db3");
             _paisRepository = new PaisRepository(dbPath);
-
+            paisAPI = new PaisAPI();
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
@@ -101,21 +101,10 @@ namespace GCalderonExamenP3.ViewModels
                 {
                     throw new Exception("El nombre no puede estar vacío.");
                 }
-                var httpClient = new HttpClient();
-                var response = await httpClient.GetStringAsync("https://restcountries.com/v3.1/name/" + _pais.Nombre + "?fields=name,region,maps");
+                paisAPI.CargarPaisAPI(_pais.Nombre);
+                _paisRepository.agregarPais(paisAPI.Nombre, paisAPI.Region, paisAPI.LinkGoogle);
 
-                
-                var paises = JsonSerializer.Deserialize<List<Models.Pais>>(response);
-
-                
-                foreach (var pais in paises)
-                {
-                    _paisRepository.agregarPais(pais.Nombre, pais.Region, pais.LinkGoogle);
-                }
-
-                Console.WriteLine( "Datos importados desde la API correctamente.");
-
-                StatusMessage = $"Persona {_pais.Nombre} guardada exitosamente.";
+                StatusMessage = $"Pais {_pais.Nombre} , {paisAPI.Region} ,{paisAPI.LinkGoogle} guardado exitosamente.";
                 await Shell.Current.GoToAsync($"..?saved={_pais.Nombre}");
             }
             catch (Exception ex)

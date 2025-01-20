@@ -6,6 +6,6 @@ public partial class PaisView : ContentPage
 	public PaisView()
 	{
 		InitializeComponent();
-		BindingContext = PaisViewModel();
+		BindingContext = new PaisViewModel();
 	}
 }

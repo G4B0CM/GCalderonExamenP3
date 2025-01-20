@@ -12,13 +12,17 @@
                     Placeholder="Ingresa un País" />
         <Button x:Name="GCalderonBotonAgregar"
                     Text="Añadir País"
-                    Grid.Row="1"
+                    
                         TextColor="DarkCyan"
                     Command="{Binding SaveCommand}" />
+        <Label x:Name="GCalderonStatus"
+                    Text="{Binding StatusMessage}"
+                   TextColor="DarkCyan"
+                   />
 
         <Button x:Name="GCalderonBotonListar"
                 Text="Revisar Listado de Paises"
-                    Grid.Row="3"
+                    
                     TextColor="DarkCyan"
                     Command="{Binding ObtenerTodosLosPaises}" />
         

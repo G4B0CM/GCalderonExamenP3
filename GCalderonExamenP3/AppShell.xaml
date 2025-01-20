@@ -7,9 +7,16 @@
     Shell.FlyoutBehavior="Disabled"
     Title="GCalderonExamenP3">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+        <ShellContent
+            Title="BuscarPais"
+            ContentTemplate="{DataTemplate local:PaisView}"
+            Route="PaisView" />
+    </TabBar>
+        
 
 </Shell>
