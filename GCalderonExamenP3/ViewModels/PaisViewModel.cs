@@ -79,8 +79,6 @@ namespace GCalderonExamenP3.ViewModels
         {
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GabrielCalderon.db3");
             _paisRepository = new PaisRepository(dbPath);
-            paisAPI = new PaisAPI();
-            _userService = new PaisService();
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
@@ -106,11 +104,18 @@ namespace GCalderonExamenP3.ViewModels
                 {
                     throw new Exception("El nombre no puede estar vacío.");
                 }
-                paisAPI = new PaisAPI();
-                
-                _paisRepository.agregarPais(paisAPI.paisNormal.Nombre, paisAPI.paisNormal.Region, paisAPI.paisNormal.LinkGoogle);
+                if (string.IsNullOrEmpty(_pais.Region))
+                {
+                    throw new Exception("El nombre no puede estar vacío.");
+                }
+                if (string.IsNullOrEmpty(_pais.LinkGoogle))
+                {
+                    throw new Exception("El nombre no puede estar vacío.");
+                }
 
-                StatusMessage = $"Pais {_pais.Nombre} , {paisAPI.paisNormal.Region} , {paisAPI.paisNormal.LinkGoogle} guardado exitosamente.";
+                _paisRepository.agregarPais(_pais.Nombre,_pais.Region,_pais.LinkGoogle);
+
+                StatusMessage = $"Pais {_pais.Nombre} guardado exitosamente.";
                 await Shell.Current.GoToAsync($"..?saved={_pais.Nombre}");
             }
             catch (Exception ex)
@@ -127,7 +132,7 @@ namespace GCalderonExamenP3.ViewModels
                     throw new Exception("Persona no válida.");
                 }
 
-                _paisRepository.EliminarPersona(paisAEliminar.Nombre);
+                _paisRepository.EliminarPais(paisAEliminar.Nombre);
                 Paises.Remove(paisAEliminar);
                 StatusMessage = $"Se eliminó a {paisAEliminar.Nombre}.";
 
@@ -142,11 +147,11 @@ namespace GCalderonExamenP3.ViewModels
         {
             try
             {
-                var paises = _paisRepository.GetAllPeople();
+                var paises = _paisRepository.ObtenerTodosLosPaises();
                 Paises.Clear();
-                foreach (var person in paises)
+                foreach (var pais in paises)
                 {
-                    Paises.Add(person);
+                    Paises.Add(pais);
                 }
 
                 StatusMessage = $"Se cargaron {Paises.Count} personas.";
@@ -171,7 +176,7 @@ namespace GCalderonExamenP3.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            if (query.ContainsKey("person") && query["person"] is Models.Pais pais)
+            if (query.ContainsKey("pais") && query["pais"] is Models.Pais pais)
             {
                 Pais = pais;
             }
@@ -182,17 +187,6 @@ namespace GCalderonExamenP3.ViewModels
 
                 if (paisEncontrado != null)
                     Paises.Remove(paisEncontrado);
-            }
-        }
-        private async Task LLamarAPI()
-        {
-            try
-            {
-                
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = $"Error al importar datos: {ex.Message}";
             }
         }
     }

@@ -11,14 +11,12 @@ namespace GCalderonExamenP3.Models
 {
     public class PaisAPI
     {
-        public Pais paisNormal {  get; set; }
-        private readonly HttpClient _httpClient;
-        public PaisAPI()
-        {
-            paisNormal = new Pais();
-        }
-        
-       
+        public string Nombre { get; set; }
+        public string Region { get; set; }
+        public string LinkGoogle { get; set; }
+        public string MiNombre { get; set; }
+
+
     }
     
 }

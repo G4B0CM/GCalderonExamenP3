@@ -55,7 +55,7 @@ namespace GCalderonExamenP3.Repositories
 
             }
 
-            public List<Pais> GetAllPeople()
+            public List<Pais> ObtenerTodosLosPaises()
             {
                 try
                 {
@@ -69,7 +69,7 @@ namespace GCalderonExamenP3.Repositories
 
                 return new List<Pais>();
             }
-            public void EliminarPersona(string name)
+            public void EliminarPais(string name)
             {
                 int result = 0;
                 try
