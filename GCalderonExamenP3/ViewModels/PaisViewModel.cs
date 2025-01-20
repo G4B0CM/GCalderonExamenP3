@@ -5,12 +5,14 @@ using GCalderonExamenP3.Repositories;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Windows.Input;
+using GCalderonExamenP3.Services;
 
 namespace GCalderonExamenP3.ViewModels
 {
     public class PaisViewModel : ObservableObject, IQueryAttributable
     {
         private string _statusMessage;
+        private readonly PaisService _userService;
         public ObservableCollection<Pais> Paises { get; set; }
         private PaisAPI paisAPI;
         private Models.Pais _pais;
@@ -78,6 +80,7 @@ namespace GCalderonExamenP3.ViewModels
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GabrielCalderon.db3");
             _paisRepository = new PaisRepository(dbPath);
             paisAPI = new PaisAPI();
+            _userService = new PaisService();
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
@@ -156,14 +159,13 @@ namespace GCalderonExamenP3.ViewModels
         public async Task CargarPaisesAsync()
         {
 
-            var paises = await paisAPI.ObtenerPaisesAsync("Ecuador");
+            var paises = await _userService.ObtenerPaisesAsync("Ecuador");
             paises.Clear();
 
             foreach (var pais in paises)
             {
                 
                 Paises.Add(pais);
-                Console.WriteLine(pais.ToString);
             }
         }
 

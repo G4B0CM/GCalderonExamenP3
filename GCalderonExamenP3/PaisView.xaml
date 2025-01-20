@@ -12,9 +12,12 @@
                     Placeholder="Ingresa un País" />
         <Button x:Name="GCalderonBotonAgregar"
                     Text="Añadir País"
-                    
                         TextColor="DarkCyan"
                     Command="{Binding LeerPaisCommand}" />
+        <Button x:Name="GCalderonBotonLimpiar"
+                    Text="Limpiar"
+                        TextColor="DarkCyan"
+                    Clicked="GCalderonBotonLimpiar_Clicked"/>
         <Label x:Name="GCalderonStatus"
                     Text="{Binding StatusMessage}"
                    TextColor="DarkCyan"
