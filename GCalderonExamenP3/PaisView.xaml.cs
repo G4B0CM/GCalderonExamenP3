@@ -6,11 +6,8 @@ public partial class PaisView : ContentPage
 	public PaisView()
 	{
 		InitializeComponent();
-		BindingContext = new PaisViewModel();
+		BindingContext = new PaisAPIViewModel();
 	}
 
-    private void GCalderonBotonLimpiar_Clicked(object sender, EventArgs e)
-    {
-		GCalderonNombre.Text = "";
-    }
+    
 }

@@ -5,16 +5,15 @@ using GCalderonExamenP3.Repositories;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Windows.Input;
-using GCalderonExamenP3.Services;
+
 
 namespace GCalderonExamenP3.ViewModels
 {
     public class PaisViewModel : ObservableObject, IQueryAttributable
     {
         private string _statusMessage;
-        private readonly PaisService _userService;
+
         public ObservableCollection<Pais> Paises { get; set; }
-        private PaisAPI paisAPI;
         private Models.Pais _pais;
         private readonly PaisRepository _paisRepository;
 
@@ -84,7 +83,6 @@ namespace GCalderonExamenP3.ViewModels
             SaveCommand = new AsyncRelayCommand(Save);
             ObtenerTodosLosPaises = new AsyncRelayCommand(LoadPeople);
             EliminarPaisCommand = new AsyncRelayCommand<Models.Pais>((person) => Eliminar(person));
-            LeerPaisCommand = new AsyncRelayCommand(CargarPaisesAsync);
         }
         public string StatusMessage
         {
@@ -159,18 +157,6 @@ namespace GCalderonExamenP3.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = $"Error al obtener personas: {ex.Message}";
-            }
-        }
-        public async Task CargarPaisesAsync()
-        {
-
-            var paises = await _userService.ObtenerPaisesAsync("Ecuador");
-            paises.Clear();
-
-            foreach (var pais in paises)
-            {
-                
-                Paises.Add(pais);
             }
         }
 
