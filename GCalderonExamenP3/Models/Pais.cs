@@ -10,7 +10,9 @@ namespace GCalderonExamenP3.Models
     [Table ("Pais")]
     public class Pais
     {
-        [PrimaryKey]
+        [PrimaryKey,AutoIncrement]
+        public int Id { get; set; }
+        [Unique]
         public string Nombre { get; set; }
         public string Region { get; set; }
         public string LinkGoogle { get; set; }
