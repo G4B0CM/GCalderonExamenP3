@@ -14,7 +14,7 @@
                     Text="Añadir País"
                     
                         TextColor="DarkCyan"
-                    Command="{Binding SaveCommand}" />
+                    Command="{Binding LeerPaisCommand}" />
         <Label x:Name="GCalderonStatus"
                     Text="{Binding StatusMessage}"
                    TextColor="DarkCyan"

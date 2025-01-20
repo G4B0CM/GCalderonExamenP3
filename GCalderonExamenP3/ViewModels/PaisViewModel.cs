@@ -19,6 +19,7 @@ namespace GCalderonExamenP3.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand ObtenerTodosLosPaises { get; }
         public ICommand EliminarPaisCommand { get; }
+        public ICommand LeerPaisCommand { get; }
         public Models.Pais Pais
         {
             get => _pais;
@@ -76,12 +77,13 @@ namespace GCalderonExamenP3.ViewModels
         {
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GabrielCalderon.db3");
             _paisRepository = new PaisRepository(dbPath);
-            
+            paisAPI = new PaisAPI();
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
             ObtenerTodosLosPaises = new AsyncRelayCommand(LoadPeople);
             EliminarPaisCommand = new AsyncRelayCommand<Models.Pais>((person) => Eliminar(person));
+            LeerPaisCommand = new AsyncRelayCommand(CargarPaisesAsync);
         }
         public string StatusMessage
         {
@@ -102,7 +104,7 @@ namespace GCalderonExamenP3.ViewModels
                     throw new Exception("El nombre no puede estar vacío.");
                 }
                 paisAPI = new PaisAPI();
-                paisAPI.CargarPaisAPI(_pais.Nombre);
+                
                 _paisRepository.agregarPais(paisAPI.paisNormal.Nombre, paisAPI.paisNormal.Region, paisAPI.paisNormal.LinkGoogle);
 
                 StatusMessage = $"Pais {_pais.Nombre} , {paisAPI.paisNormal.Region} , {paisAPI.paisNormal.LinkGoogle} guardado exitosamente.";
@@ -149,6 +151,19 @@ namespace GCalderonExamenP3.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = $"Error al obtener personas: {ex.Message}";
+            }
+        }
+        public async Task CargarPaisesAsync()
+        {
+
+            var paises = await paisAPI.ObtenerPaisesAsync("Ecuador");
+            paises.Clear();
+
+            foreach (var pais in paises)
+            {
+                
+                Paises.Add(pais);
+                Console.WriteLine(pais.ToString);
             }
         }
 
