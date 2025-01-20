@@ -3,25 +3,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GCalderonExamenP3.ViewModels"
              x:Class="GCalderonExamenP3.PaisView"
-             Title="PaisView">
+             Title="Conectar con la API" BackgroundColor="DarkCyan">
     <ContentPage.BindingContext>
         <vm:PaisViewModel />
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="10">
-        <Entry Placeholder="Ingrese el nombre del país"
-               Text="{Binding NombreBusqueda}" />
-        <Button Text="Buscar"
-                Command="{Binding BuscarPaisCommand}" />
-        <ListView ItemsSource="{Binding Paises}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding name.common}" Detail="{Binding region}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Button Text="Guardar"
-                Command="{Binding GuardarPaisCommand}" />
-        <Label Text="{Binding StatusMessage}" TextColor="Red" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="10" BackgroundColor="DarkSlateGray">
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Image Source="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+                   HeightRequest="100"
+                   WidthRequest="100" />
+            </HorizontalStackLayout>
+
+            <Frame BorderColor="LightGray" CornerRadius="8" Padding="10" BackgroundColor="White" HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Entry x:Name="Ingreso"
+                        Placeholder="Ingrese el nombre del país"
+                       Text="{Binding NombreBusqueda}"
+                       FontSize="Small"
+                       BackgroundColor="#F8F9FA"
+                       PlaceholderColor="Gray"
+                       TextColor="Black" />
+                    <Button Text="Buscar"
+                                Command="{Binding BuscarPaisCommand}"
+                                BackgroundColor="DarkCyan"
+                                TextColor="White"
+                                CornerRadius="5"
+                                HeightRequest="35"
+                                FontSize="Small" 
+                                HorizontalOptions="FillAndExpand"/>
+                    <Button x:Name="BtnLimpiar"
+                                Text="Limpiar"
+                                Clicked="BtnLimpiar_Clicked"    
+                                BackgroundColor="DarkCyan"
+                                TextColor="White"
+                                CornerRadius="5"
+                                HeightRequest="35"
+                                FontSize="Small" 
+                                HorizontalOptions="FillAndExpand"/>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BorderColor="LightGray" CornerRadius="8" Padding="8" BackgroundColor="White" HasShadow="True">
+                <Label Text="Resultados"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   TextColor="DarkCyan" />
+                <ListView ItemsSource="{Binding Paises}"
+                      BackgroundColor="White"
+                      SeparatorColor="LightGray"
+                      HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame BorderColor="LightGray" CornerRadius="5" Padding="8" BackgroundColor="#F8F9FA">
+                                    <VerticalStackLayout Spacing="3">
+                                        <Label Text="{Binding name.common}"
+                                           FontSize="Small"
+                                           FontAttributes="Bold"
+                                           TextColor="Black" />
+                                        <Label Text="{Binding region}"
+                                           FontSize="Small"
+                                           TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+            <Button Text="Guardar"
+                Command="{Binding GuardarPaisCommand}"
+                BackgroundColor="DarkCyan"
+                TextColor="LightGray"
+                CornerRadius="5"
+                HeightRequest="35"
+                FontSize="Small" />
+
+            <Label Text="{Binding StatusMessage}"
+               FontSize="Small"
+               TextColor="DarkCyan"
+               HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

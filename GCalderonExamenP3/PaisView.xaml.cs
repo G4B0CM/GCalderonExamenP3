@@ -9,5 +9,8 @@ public partial class PaisView : ContentPage
 		BindingContext = new PaisAPIViewModel();
 	}
 
-    
+    private void BtnLimpiar_Clicked(object sender, EventArgs e)
+    {
+		Ingreso.Text = "";
+    }
 }

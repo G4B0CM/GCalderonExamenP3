@@ -102,14 +102,11 @@ namespace GCalderonExamenP3.ViewModels
                     await Shell.Current.DisplayAlert("Error", "No hay un país seleccionado para guardar.", "OK");
                     return;
                 }
-
-                // Guardar el país seleccionado en la base de datos
                 _paisRepository.agregarPais(
                     PaisSeleccionado.name.common,
                     PaisSeleccionado.region,
                     PaisSeleccionado.maps.googleMaps
                 );
-
                 StatusMessage = $"País {PaisSeleccionado.name.common} guardado correctamente.";
                 await Shell.Current.DisplayAlert("Guardado", StatusMessage, "OK");
             }

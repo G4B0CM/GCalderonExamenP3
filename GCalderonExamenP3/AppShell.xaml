@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:GCalderonExamenP3"
     Shell.FlyoutBehavior="Disabled"
-    Title="GCalderonExamenP3">
+    Title="GCalderonExamenP3"
+    FlyoutBackgroundColor="DarkCyan">
 
     <TabBar>
         <ShellContent

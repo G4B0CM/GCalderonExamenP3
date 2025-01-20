@@ -2,59 +2,71 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GCalderonExamenP3.ViewModels"
-             x:Class="GCalderonExamenP3.MainPage">
+             x:Class="GCalderonExamenP3.MainPage"
+             Title="Revisar listado de paises">
     <ContentPage.BindingContext>
         <vm:PaisViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+        <VerticalStackLayout Padding="20" Spacing="15" BackgroundColor="DarkSlateGray">
             <Button x:Name="GCalderonBotonListar"
-                    Text="Revisar Listado de Paises"
-                    TextColor="DarkCyan"
-                    Command="{Binding ObtenerTodosLosPaises}" />
-            <CollectionView x:Name="listaPaises" 
-                             Grid.Row="4"
-                             ItemsSource="{Binding Paises}"
-                             HeightRequest="200"
-                             VerticalScrollBarVisibility="Default"
-                             SelectionMode="Single"
-                         SelectionChangedCommand="{Binding EliminarPaisCommand}"
-      SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}"
-                            >
+                Text="Revisar Listado de Países"
+                TextColor="White"
+                BackgroundColor="DarkCyan"
+                FontAttributes="Bold"
+                CornerRadius="10"
+                HeightRequest="40"
+                Command="{Binding ObtenerTodosLosPaises}" />
 
+            <CollectionView x:Name="listaPaises"
+                        ItemsSource="{Binding Paises}"
+                        HeightRequest="300"
+                        VerticalScrollBarVisibility="Default"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding EliminarPaisCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="3" />
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
 
-                <CollectionView.ItemTemplate >
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="DarkCyan" CornerRadius="10" Padding="20" Margin="5" BackgroundColor="DarkCyan">
-                            <HorizontalStackLayout>
-                                <Label Text="{Binding Id}"
-                                FontSize="Small"
-                                HorizontalTextAlignment="Center"
-                                 VerticalTextAlignment="Center"
-                                WidthRequest="30"/>
-                                <Label Text="{Binding Nombre}"
-                                FontSize="Medium"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                                <Label Text="{Binding Region}"
-                                FontSize="Medium"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                                <Label Text="{Binding LinkGoogle}"
-                            FontSize="Medium"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center" />
+                        <Frame BorderColor="LightGray" CornerRadius="10" Padding="10" Margin="10" BackgroundColor="#F8F9FA" HasShadow="True">
+                            <HorizontalStackLayout Spacing="15">
+                                <Frame BackgroundColor="DarkCyan" CornerRadius="10" WidthRequest="50" HeightRequest="50" Padding="0" HorizontalOptions="Start" BorderColor="DarkCyan">
+                                    <Label Text="{Binding Id}"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="White"
+                                       FontAttributes="Bold" />
+                                </Frame>
+                                <VerticalStackLayout Spacing="5" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding Nombre}"
+                                       FontSize="Medium"
+                                       FontAttributes="Bold"
+                                       TextColor="DarkSlateGray" />
+                                    <Label Text="{Binding Region}"
+                                       FontSize="Small"
+                                       TextColor="Gray" />
+                                    <Label Text="{Binding LinkGoogle}"
+                                       FontSize="Small"
+                                       TextColor="Blue"
+                                       LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Button Text="Gabriel Calderón Examen 3er Progreso"
+                    TextColor="White"
+                    BackgroundColor="DarkCyan"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="40"/>
         </VerticalStackLayout>
     </ScrollView>
+
 
 </ContentPage>

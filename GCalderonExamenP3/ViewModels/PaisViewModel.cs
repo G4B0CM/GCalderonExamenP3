@@ -111,7 +111,7 @@ namespace GCalderonExamenP3.ViewModels
                     throw new Exception("El nombre no puede estar vacío.");
                 }
 
-                _paisRepository.agregarPais(_pais.Nombre,_pais.Region,_pais.LinkGoogle);
+                _paisRepository.agregarPais(_pais.Nombre, _pais.Region, _pais.LinkGoogle);
 
                 StatusMessage = $"Pais {_pais.Nombre} guardado exitosamente.";
                 await Shell.Current.GoToAsync($"..?saved={_pais.Nombre}");
