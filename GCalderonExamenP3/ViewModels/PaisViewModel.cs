@@ -76,7 +76,7 @@ namespace GCalderonExamenP3.ViewModels
         {
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GabrielCalderon.db3");
             _paisRepository = new PaisRepository(dbPath);
-            paisAPI = new PaisAPI();
+            
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
@@ -101,10 +101,11 @@ namespace GCalderonExamenP3.ViewModels
                 {
                     throw new Exception("El nombre no puede estar vacío.");
                 }
+                paisAPI = new PaisAPI();
                 paisAPI.CargarPaisAPI(_pais.Nombre);
-                _paisRepository.agregarPais(paisAPI.Nombre, paisAPI.Region, paisAPI.LinkGoogle);
+                _paisRepository.agregarPais(paisAPI.paisNormal.Nombre, paisAPI.paisNormal.Region, paisAPI.paisNormal.LinkGoogle);
 
-                StatusMessage = $"Pais {_pais.Nombre} , {paisAPI.Region} ,{paisAPI.LinkGoogle} guardado exitosamente.";
+                StatusMessage = $"Pais {_pais.Nombre} , {paisAPI.paisNormal.Region} , {paisAPI.paisNormal.LinkGoogle} guardado exitosamente.";
                 await Shell.Current.GoToAsync($"..?saved={_pais.Nombre}");
             }
             catch (Exception ex)

@@ -9,13 +9,14 @@
 
     <TabBar>
         <ShellContent
-            Title="Home"
+    Title="BuscarPais"
+    ContentTemplate="{DataTemplate local:PaisView}"
+    Route="PaisView" />
+        <ShellContent
+            Title="Listado de paises"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
-        <ShellContent
-            Title="BuscarPais"
-            ContentTemplate="{DataTemplate local:PaisView}"
-            Route="PaisView" />
+        
     </TabBar>
         
 

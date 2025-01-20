@@ -11,9 +11,6 @@ namespace GCalderonExamenP3.Models
     public class PaisAPI
     {
         public Pais paisNormal {  get; set; }
-        public string Nombre { get; set; }
-        public string Region { get; set; }
-        public string LinkGoogle { get; set; }
 
         public async void CargarPaisAPI(string Nombre)
         {

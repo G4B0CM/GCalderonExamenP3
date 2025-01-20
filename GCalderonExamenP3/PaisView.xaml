@@ -20,11 +20,7 @@
                    TextColor="DarkCyan"
                    />
 
-        <Button x:Name="GCalderonBotonListar"
-                Text="Revisar Listado de Paises"
-                    
-                    TextColor="DarkCyan"
-                    Command="{Binding ObtenerTodosLosPaises}" />
+        
         
         <CollectionView x:Name="listaPaises" 
                                     Grid.Row="4"
