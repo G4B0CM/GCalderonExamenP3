@@ -81,7 +81,7 @@ namespace GCalderonExamenP3.ViewModels
             _pais = new Models.Pais();
             Paises = new ObservableCollection<Models.Pais>();
             SaveCommand = new AsyncRelayCommand(Save);
-            ObtenerTodosLosPaises = new AsyncRelayCommand(LoadPeople);
+            ObtenerTodosLosPaises = new AsyncRelayCommand(CargarPaises);
             EliminarPaisCommand = new AsyncRelayCommand<Models.Pais>((person) => Eliminar(person));
         }
         public string StatusMessage
@@ -138,10 +138,10 @@ namespace GCalderonExamenP3.ViewModels
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error al eliminar a la persona: {ex.Message}";
+                StatusMessage = $"Error al eliminar al pais: {ex.Message}";
             }
         }
-        private async Task LoadPeople()
+        private async Task CargarPaises()
         {
             try
             {
@@ -152,11 +152,11 @@ namespace GCalderonExamenP3.ViewModels
                     Paises.Add(pais);
                 }
 
-                StatusMessage = $"Se cargaron {Paises.Count} personas.";
+                StatusMessage = $"Se cargaron {Paises.Count} paises.";
             }
             catch (Exception ex)
             {
-                StatusMessage = $"Error al obtener personas: {ex.Message}";
+                StatusMessage = $"Error al obtener paises: {ex.Message}";
             }
         }
 

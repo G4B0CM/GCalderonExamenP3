@@ -5,7 +5,7 @@
              x:Class="GCalderonExamenP3.PaisView"
              Title="Conectar con la API" BackgroundColor="DarkCyan">
     <ContentPage.BindingContext>
-        <vm:PaisViewModel />
+        <vm:PaisAPIViewModel />
     </ContentPage.BindingContext>
 
     <ScrollView>
